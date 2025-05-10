@@ -1,0 +1,30 @@
+#!/bin/bash
+### Job name
+#PBS -N Asteroids_DQN
+### Specify the queue (use gpu if GPUs are available, else workq)
+#PBS -q workq
+### Request 1 node with 8 processors
+#PBS -l nodes=1:ppn=8
+### Specify maximum runtime (72 hours for long training)
+#PBS -l walltime=72:00:00
+### Specify memory limit (16GB, adjustable based on needs)
+#PBS -l mem=16gb
+### Output file
+#PBS -o localhost:/home/nray/NEW_asteroids_FE_retooling/output.log
+### Error file
+#PBS -e localhost:/home/nray/NEW_asteroids_FE_retooling/error.log
+### Send email on begin, end, and abort
+#PBS -m bae
+### Email address
+#PBS -M nray@colgate.edu
+### Use submission environment
+#PBS -V
+
+### Change to working directory
+cd $PBS_O_WORKDIR
+
+### Activate Conda environment
+source /local/JupyterHub/bin/activate && conda activate asteroids_dqn
+
+### Run the Asteroids DQN training
+python /home/nray/NEW_asteroids_FE_retooling/src/asteroids.py
